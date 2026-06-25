@@ -120,3 +120,4 @@ C:\Users\i.ennajy\TaskTrackerApi\bin\Debug\net10.0\ru\Microsoft.CodeAnalysis.Wor
 C:\Users\i.ennajy\TaskTrackerApi\bin\Debug\net10.0\tr\Microsoft.CodeAnalysis.Workspaces.MSBuild.resources.dll
 C:\Users\i.ennajy\TaskTrackerApi\bin\Debug\net10.0\zh-Hans\Microsoft.CodeAnalysis.Workspaces.MSBuild.resources.dll
 C:\Users\i.ennajy\TaskTrackerApi\bin\Debug\net10.0\zh-Hant\Microsoft.CodeAnalysis.Workspaces.MSBuild.resources.dll
+C:\Users\i.ennajy\TaskTrackerApi\obj\Debug\net10.0\TaskTrackerApi.sourcelink.json
