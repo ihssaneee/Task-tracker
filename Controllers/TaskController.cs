@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using TaskTrackerApi.Models;
 using TaskTrackerApi.Services;
+using TaskTrackerApi.Dtos;
 
 namespace TaskTrackerApi.Controllers
 {
@@ -37,19 +38,21 @@ public async Task<IActionResult> GetAll()
 
         [HttpPost]
 
-    public async Task<IActionResult> CreateTask(TaskItem task)
+    public async Task<IActionResult> CreateTask(CreateTaskRequest request)
         {
-            var taskCreated= await _taskService.CreateTaskAsync(task);
-           return CreatedAtAction(nameof(GetById), new {id=taskCreated.Id}, taskCreated);
+           
 
+            var taskCreated = await _taskService.CreateTaskAsync(request);
+            return CreatedAtAction(nameof(GetById), new { id = taskCreated.Id }, taskCreated);
+           
         }
 
 
         [HttpPut("{id}")]
 
-        public async Task<IActionResult> UpdateTask(int id,TaskItem task)
+        public async Task<IActionResult> UpdateTask(UpdateTaskRequest request, int id)
         {
-            var updatedTask= await _taskService.UpdateTaskAsync(id,task);
+            var updatedTask= await _taskService.UpdateTaskAsync(id, request);
             if (updatedTask == null)
             {
                 return NotFound();

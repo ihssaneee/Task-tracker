@@ -1,6 +1,7 @@
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
+namespace TaskTrackerApi.Dtos{
 public class CreateTaskRequest
 {
     [Required]
@@ -9,4 +10,5 @@ public class CreateTaskRequest
 
     [Required]
     public string Description { get; set; } = string.Empty;
+}
 }

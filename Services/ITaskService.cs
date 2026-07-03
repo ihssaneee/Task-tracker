@@ -1,5 +1,5 @@
 using TaskTrackerApi.Models;
-
+using TaskTrackerApi.Dtos;
 namespace TaskTrackerApi.Services
 {
     public interface ITaskService
@@ -10,9 +10,9 @@ namespace TaskTrackerApi.Services
 
             Task<TaskItem?>  GetTaskItemAsync(int id);
 
-            Task<TaskItem> CreateTaskAsync(TaskItem taskItem);
+            Task<TaskItem> CreateTaskAsync(CreateTaskRequest request);
 
-            Task<TaskItem?> UpdateTaskAsync (int id, TaskItem updatedTask);
+            Task<TaskItem?> UpdateTaskAsync (int id, UpdateTaskRequest request);
 
             Task <bool> DeleteTaskAsync (int id);
 

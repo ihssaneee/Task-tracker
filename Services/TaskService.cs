@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Http.HttpResults;
 using TaskTrackerApi.Models;
 using TaskTrackerApi.Data;
+using Microsoft.EntityFrameworkCore;
+using TaskTrackerApi.Dtos;
 
 namespace TaskTrackerApi.Services
 {
@@ -18,43 +20,61 @@ namespace TaskTrackerApi.Services
             return await  _context.Tasks.ToListAsync();
         }
 
-        public  Task<TaskItem?> GetTaskItemAsync (int id)
+        public async Task<TaskItem?> GetTaskItemAsync (int id)
         {
-            var task= _tasks.FirstOrDefault(t=>t.Id==id);
-            return  Task.FromResult(task);
+           return await _context.Tasks.FindAsync(id);
 
         }
         
 
 
-        public  Task<TaskItem> CreateTaskAsync (TaskItem taskItem)
+        public async Task<TaskItem> CreateTaskAsync (CreateTaskRequest request)
         {
-            taskItem.Id=_nextId++;
-            taskItem.CreatedAt=DateTime.UtcNow;
+            var task= new TaskItem
+            {
+                Title=request.Title,
+                Description=request.Description,
+                IsCompleted=false,
+                CreatedAt=DateTime.UtcNow
+            };
+           
+        await _context.Tasks.AddAsync(task);
+        await _context.SaveChangesAsync();
+            return task;
+        }
+        
+
+        public async Task<TaskItem?> UpdateTaskAsync(int id, UpdateTaskRequest request)
+        {
+            var task= await _context.Tasks.FindAsync(id);
+            if (task == null)
+            {
+                return null;
+            }
+            task.Title=request.Title;
+            task.Description=request.Description;
+            task.IsCompleted=request.IsCompleted;
+            await _context.SaveChangesAsync();
+
+            return task;
             
-            _tasks.Add(taskItem);
-            return   Task.FromResult(taskItem);
-        }
-        
-
-        public Task<TaskItem?> UpdateTaskAsync(int id, TaskItem updatedTask)
-        {
-            var task= _tasks.FirstOrDefault(t=>t.Id==id);
-           Console.WriteLine(updatedTask.IsCompleted);
-            if (task==null) return Task.FromResult<TaskItem?>(null);
-            task.Title=updatedTask.Title;
-            task.Description=updatedTask.Description;
-            task.IsCompleted=updatedTask.IsCompleted;
-            return Task.FromResult<TaskItem?>(task);
             
         }
 
         public async Task<bool> DeleteTaskAsync(int id)
         {
-         var task=await GetTaskItemAsync(id);
-         if (task==null) return false;
-         _tasks.Remove(task);
-         return true ;
+        var task= await _context.FindAsync<TaskItem>(id);
+
+        if (task == null)
+            {
+                return false;
+            }
+        _context.Tasks.Remove(task);
+        await _context.SaveChangesAsync();
+        return true;
+        
+
+
             
         }
 
