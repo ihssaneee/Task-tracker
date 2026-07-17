@@ -38,14 +38,14 @@ public async Task<IActionResult> GetAll()
 
         [HttpPost]
 
-    public async Task<IActionResult> CreateTask(CreateTaskRequest request)
-        {
+    // public async Task<IActionResult> CreateTask(CreateTaskRequest request)
+    //     {
            
 
-            var taskCreated = await _taskService.CreateTaskAsync(request);
-            return CreatedAtAction(nameof(GetById), new { id = taskCreated.Id }, taskCreated);
+    //         var taskCreated = await _taskService.CreateTaskAsync(request);
+    //         return CreatedAtAction(nameof(GetById), new { id = taskCreated.Id }, taskCreated);
            
-        }
+    //     }
 
 
         [HttpPut("{id}")]
